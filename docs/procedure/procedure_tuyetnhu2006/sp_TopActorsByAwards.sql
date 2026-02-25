@@ -6,7 +6,7 @@ BEGIN
         a.Actor_Name,
         COUNT(aa.Award_ID) AS Total_Awards
     FROM tbl_actor a
-    LEFT JOIN tbl_award_actor aa 
+    LEFT JOIN `tbl_award-actor` aa 
         ON a.Actor_ID = aa.Actor_ID
     GROUP BY a.Actor_ID, a.Actor_Name
     ORDER BY Total_Awards DESC;
