@@ -1,7 +1,7 @@
 BEGIN
     SELECT 
-        g.Genre_Name AS TheLoai,
-        COUNT(m.Movie_ID) AS SoLuongPhim
+        g.Genre_Name AS Genre,
+        COUNT(m.Movie_ID) AS MovieCount
     FROM tbl_genre g
     LEFT JOIN tbl_movie m ON g.Genre_ID = m.Genre_ID
     GROUP BY g.Genre_Name;
