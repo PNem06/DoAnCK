@@ -8,7 +8,6 @@ class Director {
     public function __construct($conn){
         $this->conn = $conn;
     }
-
     public function setDirector($id,$name,$info,$social){
         $this->id = $id;
         $this->name = $name;
@@ -24,19 +23,22 @@ class Director {
     public function getInfo(){
         return $this->info;
     }
+
     public function getSocial(){
         return $this->social;
     }
     public function getDirectedMovies($director_id){
 
         $sql = "SELECT * 
-                FROM movie
-                WHERE director_id = ?";
+                FROM tbl_movie_director
+                WHERE Director_ID = ?";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i",$director_id);
         $stmt->execute();
+
         $result = $stmt->get_result();
+
         $movies = [];
 
         while($row = $result->fetch_assoc()){
