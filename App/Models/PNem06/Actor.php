@@ -18,7 +18,6 @@ class Actor {
     public function getName(){
         return $this->name;
     }
-
     public function getInfo(){
         return $this->info;
     }
@@ -26,19 +25,20 @@ class Actor {
 
         $sql = "
         SELECT 
-            c.id,
-            c.name AS character_name,
-            m.title AS movie_title
-        FROM character c
-        JOIN movie m ON c.movie_id = m.id
-        WHERE c.actor_id = ?
+            Character_ID,
+            Character_Name,
+            Movie_ID
+        FROM tbl_character
+        WHERE Actor_ID = ?
         ";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i",$actor_id);
         $stmt->execute();
+
         $result = $stmt->get_result();
         $characters = [];
+
         while($row = $result->fetch_assoc()){
             $characters[] = $row;
         }
