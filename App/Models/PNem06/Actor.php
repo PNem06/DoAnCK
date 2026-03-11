@@ -22,7 +22,6 @@ class Actor {
         return $this->info;
     }
     public function getCharacters($actor_id){
-
         $sql = "
         SELECT 
             Character_ID,
