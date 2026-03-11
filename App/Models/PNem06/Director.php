@@ -1,5 +1,5 @@
 <?php
-class Director {
+class Director{
     private $conn;
     private $id;
     private $name;
