@@ -10,6 +10,7 @@ class Character {
         $this->id = $id;
         $this->name = $name;
     }
+
     public function getId(){
         return $this->id;
     }
@@ -21,13 +22,12 @@ class Character {
 
         $sql = "
         SELECT 
-            c.name AS character_name,
-            a.name AS actor_name,
-            m.title AS movie_title
-        FROM character c
-        JOIN actor a ON c.actor_id = a.id
-        JOIN movie m ON c.movie_id = m.id
-        WHERE c.id = ?
+            c.Character_Name,
+            a.Actor_Name
+        FROM tbl_character c
+        JOIN tbl_actor a 
+        ON c.Actor_ID = a.Actor_ID
+        WHERE c.Character_ID = ?
         ";
 
         $stmt = $this->conn->prepare($sql);
