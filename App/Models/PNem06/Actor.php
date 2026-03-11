@@ -35,10 +35,8 @@ class Actor {
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i",$actor_id);
         $stmt->execute();
-
         $result = $stmt->get_result();
         $characters = [];
-
         while($row = $result->fetch_assoc()){
             $characters[] = $row;
         }
