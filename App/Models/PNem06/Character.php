@@ -1,10 +1,11 @@
 <?php
+require_once __DIR__ . '/../../Config/database.php';
 class Character {
     private $conn;
     private $id;
     private $name;
     public function __construct($conn){
-        $this->conn = $conn;
+         $this->conn = Database::getInstance()->getConnection();
     }
     public function setCharacter($id,$name){
         $this->id = $id;
@@ -18,23 +19,25 @@ class Character {
     public function getName(){
         return $this->name;
     }
-    public function getCharInfo($char_id){
+    public function getActorsByMovie($movie_id){
+        try {
+            if (!$movie_id) return [];
 
-        $sql = "
-        SELECT 
-            c.Character_Name,
-            a.Actor_Name
-        FROM tbl_character c
-        JOIN tbl_actor a 
-        ON c.Actor_ID = a.Actor_ID
-        WHERE c.Character_ID = ?
-        ";
+            $sql = "CALL sp_GetActorsByMovie(:movie_id)";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':movie_id', $movie_id, PDO::PARAM_INT);
+            $stmt->execute();
 
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i",$char_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_assoc();
+            $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+            $stmt->closeCursor();
+
+            return $data ?: [];
+
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return [];
+        }
     }
 }
 ?>
